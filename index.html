@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evariste Green Plants | Environmental Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .dark-mode {
+            background-color: #1a202c;
+            color: #e2e8f0;
+        }
+        .dark-mode .bg-white {
+            background-color: #2d3748;
+        }
+        .dark-mode .text-gray-800 {
+            color: #e2e8f0;
+        }
+        .dark-mode .text-gray-600 {
+            color: #cbd5e0;
+        }
+        .dark-mode .bg-gray-100 {
+            background-color: #4a5568;
+        }
+        .dark-mode .border-gray-200 {
+            border-color: #4a5568;
+        }
+        .smooth-scroll {
+            scroll-behavior: smooth;
+        }
+        .stat-counter {
+            transition: all 0.5s ease;
+        }
+        .team-card:hover {
+            transform: translateY(-5px);
+            transition: transform 0.3s ease;
+        }
+        .project-card {
+            transition: all 0.3s ease;
+        }
+        .project-card:hover {
+            transform: scale(1.03);
+        }
+        .auth-modal, .project-modal, .success-modal, .newsletter-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        .auth-form, .project-form, .success-form, .newsletter-form {
+            animation: fadeIn 0.3s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .active-filter {
+            background-color: #059652 !important;
+            color: white !important;
+        }
+        .active-donation {
+            background-color: #059669 !important;
+            color: white !important;
+            border-color: #059669 !important;
+        }
+        .active-payment {
+            border-color: #059669 !important;
+            background-color: #f0fdf4 !important;
+        }
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #10b981, #059677);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        .logo-icon::before {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #065f46;
+            border-radius: 50% 50% 0 50%;
+            transform: rotate(45deg);
+            top: 5px;
+            left: 10px;
+        }
+        .logo-icon::after {
+            content: "";
+            position: absolute;
+            width: 8px;
+            height: 15px;
+            background-color: #065f46;
+            border-radius: 4px;
+            bottom: 5px;
+            left: 16px;
+        }
+        .logo-text {
+            font-weight: bold;
+            font-size: 1.25rem;
+            color: #065f46;
+        }
+        .dark-mode .logo-text {
+            color: #a7f3d0;
+        }
+    </style>
+</head>
+<body class="smooth-scroll bg-gray-50">
+    <!-- Navigation -->
+    <header class="sticky top-0 z-50 bg-white shadow-md">
+        <nav class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="logo-container">
+                <div class="logo-icon"></div>
+                <span class="logo-text text-purple-500">Evariste Green Plants🗺</span>
+            </div>
+            
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex space-x-8">
+                <a href="#home" class="nav-link text-green-700 font-medium hover:text-green-500 transition">Home</a>
+                <a href="#about" class="nav-link text-gray-600 font-medium hover:text-green-500 transition">About</a>
+                <a href="#projects" class="nav-link text-gray-600 font-medium hover:text-green-500 transition">Projects</a>
+                <a href="#resources" class="nav-link text-gray-600 font-medium hover:text-green-500 transition">Resources</a>
+                <a href="#donate" class="nav-link text-gray-600 font-medium hover:text-green-500 transition">Donate</a>
+                <a href="#contact" class="nav-link text-gray-600 font-medium hover:text-green-500 transition">Contact</a>
+            </div>
+            
+            <!-- Auth Buttons -->
+            <div class="flex items-center space-x-4">
+                <button id="login-btn" class="px-4 py-2 text-green-700 font-medium hover:text-green-500 transition">Login</button>
+                <button id="signup-btn" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-500 transition">Sign Up</button>
+                
+                <button id="theme-toggle" class="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition">
+                    <i class="fas fa-moon text-gray-700"></i>
+                </button>
+                
+                <button id="mobile-menu-button" class="md:hidden p-2 rounded-md bg-gray-100 hover:bg-gray-200 transition">
+                    <i class="fas fa-bars text-gray-700"></i>
+                </button>
+            </div>
+        </nav>
+        
+        <!-- Mobile Navigation -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white py-2 px-4 shadow-lg">
+            <a href="#home" class="block py-2 text-green-700 font-medium nav-link">Home</a>
+            <a href="#about" class="block py-2 text-gray-600 font-medium nav-link">About</a>
+            <a href="#projects" class="block py-2 text-gray-600 font-medium nav-link">Projects</a>
+            <a href="#resources" class="block py-2 text-gray-600 font-medium nav-link">Resources</a>
+            <a href="#donate" class="block py-2 text-gray-600 font-medium nav-link">Donate</a>
+            <a href="#contact" class="block py-2 text-gray-600 font-medium nav-link">Contact</a>
+            <div class="border-t border-gray-200 mt-2 pt-2">
+                <button id="mobile-login-btn" class="block py-2 text-green-700 font-medium w-full text-left">Login</button>
+                <button id="mobile-signup-btn" class="block py-2 text-green-700 font-medium w-full text-left">Sign Up</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="auth-modal">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-md mx-4 auth-form">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800">Login to Your Account</h2>
+                    <button id="close-login" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                <form id="login-form">
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2" for="login-email">Email Address</label>
+                        <input type="email" id="login-email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 mb-2" for="login-password">Password</label>
+                        <input type="password" id="login-password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                    </div>
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="flex items-center">
+                            <input type="checkbox" id="remember-me" class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded">
+                            <label for="remember-me" class="ml-2 block text-sm text-gray-700">Remember me</label>
+                        </div>
+                        <a href="#" class="text-sm text-green-600 hover:text-green-500">Forgot password?</a>
+                    </div>
+                    <button type="submit" class="w-full bg-green-600 text-white py-2 rounded-lg font-medium hover:bg-green-500 transition">Login</button>
+                </form>
+                <div class="mt-6 text-center">
+                    <p class="text-gray-600">Don't have an account? <button id="switch-to-signup" class="text-green-600 font-medium hover:text-green-500">Sign up</button></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div id="signup-modal" class="auth-modal">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-md mx-4 auth-form">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800">Create an Account</h2>
+                    <button id="close-signup" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                <form id="signup-form">
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2" for="signup-name">Full Name</label>
+                        <input type="text" id="signup-name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2" for="signup-email">Email Address</label>
+                        <input type="email" id="signup-email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2" for="signup-password">Password</label>
+                        <input type="password" id="signup-password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 mb-2" for="signup-confirm">Confirm Password</label>
+                        <input type="password" id="signup-confirm" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                    </div>
+                    <div class="mb-6">
+                        <div class="flex items-center">
+                            <input type="checkbox" id="agree-terms" class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded" required>
+                            <label for="agree-terms" class="ml-2 block text-sm text-gray-700">I agree to the <a href="#" class="text-green-600 hover:text-green-500">Terms and Conditions</a></label>
+                        </div>
+                    </div>
+                    <button type="submit" class="w-full bg-green-600 text-white py-2 rounded-lg font-medium hover:bg-green-500 transition">Create Account</button>
+                </form>
+                <div class="mt-6 text-center">
+                    <p class="text-gray-600">Already have an account? <button id="switch-to-login" class="text-green-600 font-medium hover:text-green-500">Login</button></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative bg-gradient-to-r from-green-700  via-sky-500 to-green-900 text-white py-20 md:py-32">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">Protecting Our Planet Together</h1>
+            <p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto">Join our mission to create a sustainable future through environmental management, education, and community action.</p>
+            <div class="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-6">
+                <button id="learn-more-btn" class="bg-white text-green-700 px-8 py-3 rounded-lg font-bold hover:bg-green-100 transition">Learn More</button>
+                <button id="donate-hero-btn" class="bg-yellow-500 text-green-900 px-8 py-3 rounded-lg font-bold hover:bg-yellow-400 transition">Donate Now</button>
+                <button id="newsletter-hero-btn" class="bg-transparent border-2 border-white px-8 py-3 rounded-lg font-bold hover:bg-white hover:text-green-700 transition">Join Newsletter</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Our Environmental Impact</h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="text-5xl font-bold text-green-600 mb-2 stat-counter" data-target="12500">0</div>
+                    <p class="text-gray-600">Trees Planted</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-5xl font-bold text-green-600 mb-2 stat-counter" data-target="8500">0</div>
+                    <p class="text-gray-600">CO2 Reduction (tons)</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-5xl font-bold text-green-600 mb-2 stat-counter" data-target="320">0</div>
+                    <p class="text-gray-600">Clean Energy Projects</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-5xl font-bold text-green-600 mb-2 stat-counter" data-target="45">0</div>
+                    <p class="text-gray-600">Countries Reached</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">About Evariste Green Plants</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
+                <div>
+                    <h3 class="text-2xl font-bold text-green-700 mb-4">Our Mission</h3>
+                    <p class="text-gray-600 mb-6">We are dedicated to creating a sustainable future through innovative environmental management solutions, community engagement, and education programs that empower individuals and organizations to make a positive impact.</p>
+                    <p class="text-gray-600">Our approach combines scientific research with practical action to address the most pressing environmental challenges of our time.</p>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold text-green-700 mb-4">Our Vision</h3>
+                    <p class="text-gray-600 mb-6">We envision a world where human activities are in harmony with nature, where ecosystems thrive, and where future generations inherit a healthy, resilient planet.</p>
+                    <p class="text-gray-600">Through collaboration and innovation, we work towards a future where sustainability is integrated into all aspects of society.</p>
+                </div>
+            </div>
+            
+            <h3 class="text-2xl font-bold text-center text-gray-800 mb-8">Our Team</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-lg shadow-md overflow-hidden team-card">
+                    <img src="./image/download.png" alt="Team Member" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h4 class="text-xl font-bold text-gray-800">Mr.Kaburo Audace</h4>
+                        <p class="text-green-600 mb-2">Environmental Scientist</p>
+                        <p class="text-gray-600">PhD in Environmental Science with 15 years of experience in sustainability research.</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md overflow-hidden team-card">
+                    <img src="./image/claudine.jpg" alt="Team Member" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h4 class="text-xl font-bold text-gray-800">MS.claudine Nikuze</h4>
+                        <p class="text-green-600 mb-2">Conservation Director</p>
+                        <p class="text-gray-600">Leading conservation projects worldwide with a focus on biodiversity protection.</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md overflow-hidden team-card">
+                    <img src="./image/download (1).png" alt="Team Member" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h4 class="text-xl font-bold text-gray-800">Mr.Pascal Nkunzimana Blaise</h4>
+                        <p class="text-green-600 mb-2">Community Outreach Coordinator</p>
+                        <p class="text-gray-600">Connecting communities with environmental education and action programs.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Our Projects</h2>
+            
+            <div class="flex flex-wrap justify-center mb-8">
+                <button class="filter-btn active-filter px-4 py-2 mx-2 bg-green-600 text-white rounded-lg" data-filter="all">All Projects</button>
+                <button class="filter-btn px-4 py-2 mx-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300" data-filter="conservation">Conservation</button>
+                <button class="filter-btn px-4 py-2 mx-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300" data-filter="education">Education</button>
+                <button class="filter-btn px-4 py-2 mx-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300" data-filter="cleanup">Cleanup</button>
+                <button class="filter-btn px-4 py-2 mx-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300" data-filter="renewable">Renewable Energy</button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="project-card bg-white rounded-lg shadow-md overflow-hidden" data-category="conservation">
+                    <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Reforestation Project" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <span class="inline-block px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm mb-4">Conservation</span>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Amazon Reforestation</h3>
+                        <p class="text-gray-600 mb-4">Restoring degraded areas of the Amazon rainforest through native species planting and community engagement.</p>
+                        <button class="project-detail-btn text-green-600 font-medium hover:text-green-500" data-project="1">View Details →</button>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="project-card bg-white rounded-lg shadow-md overflow-hidden" data-category="education">
+                    <img src="./image/evariste.jpg" alt="Education Program" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <span class="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm mb-4">Education</span>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Youth Environmental Education</h3>
+                        <p class="text-gray-600 mb-4">Empowering the next generation with knowledge and skills to address environmental challenges.</p>
+                        <button class="project-detail-btn text-green-600 font-medium hover:text-green-500" data-project="2">View Details →</button>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="project-card bg-white rounded-lg shadow-md overflow-hidden" data-category="cleanup">
+                    <img src="https://images.unsplash.com/photo-1604187351574-c75ca79f5807?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Ocean Cleanup" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <span class="inline-block px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-sm mb-4">Cleanup</span>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Ocean Plastic Cleanup</h3>
+                        <p class="text-gray-600 mb-4">Removing plastic waste from oceans and coastlines while promoting sustainable alternatives.</p>
+                        <button class="project-detail-btn text-green-600 font-medium hover:text-green-500" data-project="3">View Details →</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources Section -->
+    <section id="resources" class="py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Educational Resources</h2>
+            
+            <div class="mb-8 max-w-md mx-auto">
+                <div class="relative">
+                    <input type="text" id="resource-search" placeholder="Search resources..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                    <i class="fas fa-search absolute right-3 top-3 text-gray-400"></i>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Resource 1 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden resource-item">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-file-pdf text-red-500 text-2xl mr-3"></i>
+                            <h3 class="text-xl font-bold text-gray-800">Sustainable Living Guide</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">A comprehensive guide to adopting sustainable practices in daily life, from energy conservation to waste reduction.</p>
+                        <button class="download-btn text-green-600 font-medium hover:text-green-500 flex items-center" data-resource="sustainable-guide">
+                            <i class="fas fa-download mr-2"></i> Download PDF
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Resource 2 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden resource-item">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-chart-bar text-blue-500 text-2xl mr-3"></i>
+                            <h3 class="text-xl font-bold text-gray-800">Climate Change Statistics</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">Latest data and visualizations on climate change impacts, emissions, and mitigation efforts worldwide.</p>
+                        <button class="download-btn text-green-600 font-medium hover:text-green-500 flex items-center" data-resource="climate-stats">
+                            <i class="fas fa-download mr-2"></i> Download Report
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Resource 3 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden resource-item">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-video text-purple-500 text-2xl mr-3"></i>
+                            <h3 class="text-xl font-bold text-gray-800">Renewable Energy Webinar</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">Expert discussion on the latest advancements in renewable energy technologies and implementation strategies.</p>
+                        <button class="watch-btn text-green-600 font-medium hover:text-green-500 flex items-center" data-resource="renewable-webinar">
+                            <i class="fas fa-play-circle mr-2"></i> Watch Video
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Donation Section -->
+    <section id="donate" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Support Our Mission</h2>
+            
+            <div class="max-w-4xl mx-auto bg-green-50 rounded-xl p-8">
+                <h3 class="text-2xl font-bold text-green-700 mb-6">Make a Donation</h3>
+                <p class="text-gray-600 mb-8">Your contribution helps fund critical environmental projects, educational programs, and conservation efforts around the world.</p>
+                
+                <div class="mb-8">
+                    <h4 class="text-lg font-bold text-gray-800 mb-4">Select Amount</h4>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                        <button class="donation-amount bg-white border-2 border-gray-300 text-gray-700 py-3 rounded-lg font-medium hover:bg-gray-100 transition" data-amount="25">$25</button>
+                        <button class="donation-amount bg-white border-2 border-gray-300 text-gray-700 py-3 rounded-lg font-medium hover:bg-gray-100 transition" data-amount="50">$50</button>
+                        <button class="donation-amount bg-white border-2 border-gray-300 text-gray-700 py-3 rounded-lg font-medium hover:bg-gray-100 transition" data-amount="100">$100</button>
+                        <button class="donation-amount bg-white border-2 border-gray-300 text-gray-700 py-3 rounded-lg font-medium hover:bg-gray-100 transition" data-amount="250">$250</button>
+                    </div>
+                    <div class="relative">
+                        <span class="absolute left-3 top-3 text-gray-500">$</span>
+                        <input type="number" id="custom-amount" placeholder="Custom Amount" class="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                    </div>
+                </div>
+                
+                <div class="mb-8">
+                    <h4 class="text-lg font-bold text-gray-800 mb-4">Payment Method</h4>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <button class="payment-method bg-white border-2 border-gray-300 py-3 rounded-lg flex items-center justify-center hover:bg-gray-100 transition" data-method="paypal">
+                            <i class="fab fa-cc-paypal text-blue-500 text-2xl"></i>
+                        </button>
+                        <button class="payment-method bg-white border-2 border-gray-300 py-3 rounded-lg flex items-center justify-center hover:bg-gray-100 transition" data-method="stripe">
+                            <i class="fab fa-cc-stripe text-purple-500 text-2xl"></i>
+                        </button>
+                        <button class="payment-method bg-white border-2 border-gray-300 py-3 rounded-lg flex items-center justify-center hover:bg-gray-100 transition" data-method="crypto">
+                            <i class="fab fa-bitcoin text-orange-500 text-2xl"></i>
+                        </button>
+                        <button class="payment-method bg-white border-2 border-gray-300 py-3 rounded-lg flex items-center justify-center hover:bg-gray-100 transition" data-method="bank">
+                            <i class="fas fa-university text-green-500 text-2xl"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="mb-8">
+                    <div class="flex items-center">
+                        <input type="checkbox" id="recurring-donation" class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded">
+                        <label for="recurring-donation" class="ml-2 block text-sm text-gray-700">Make this a monthly recurring donation</label>
+                    </div>
+                </div>
+                
+                <button id="donate-now" class="w-full bg-green-600 text-white py-3 rounded-lg font-bold text-lg hover:bg-green-500 transition">Donate Now</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Get In Touch</h2>
+            
+            <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div>
+                    <h3 class="text-2xl font-bold text-green-700 mb-6">Contact Information</h3>
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <i class="fas fa-map-marker-alt text-green-600 mt-1 mr-4"></i>
+                            <div>
+                                <h4 class="font-bold text-gray-800">Our Office</h4>
+                                <p class="text-gray-600">100 Evariste Green Plants streets,city-Mahama.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-phone text-green-600 mt-1 mr-4"></i>
+                            <div>
+                                <h4 class="font-bold text-gray-800">Phone</h4>
+                                <p class="text-gray-600">+250 785786547</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-envelope text-green-600 mt-1 mr-4"></i>
+                            <div>
+                                <h4 class="font-bold text-gray-800">Email</h4>
+                                <p class="text-gray-600">info@evaristegreenplants.org</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8">
+                        <h4 class="font-bold text-gray-800 mb-4">Follow Us</h4>
+                        <div class="flex space-x-4">
+                            <a href="https://www.facebook.com/evariste.arrogent.ever" class="social-btn w-10 h-10 bg-green-600 rounded-full flex items-center justify-center text-white hover:bg-green-500 transition">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href=" https://x.com/EBapfekure3" class="social-btn w-10 h-10 bg-green-600 rounded-full flex items-center justify-center text-white hover:bg-green-500 transition">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href=" https://www.instagram.com/evari_ste2025/" class="social-btn w-10 h-10 bg-green-600 rounded-full flex items-center justify-center text-white hover:bg-green-500 transition">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/in/evariste-bapfekurera-a3700b2b0/ " class="social-btn w-10 h-10 bg-green-600 rounded-full flex items-center justify-center text-white hover:bg-green-500 transition">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-2xl font-bold text-green-700 mb-6">Send Us a Message</h3>
+                    <form id="contact-form">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label class="block text-gray-700 mb-2" for="contact-name">Your Name</label>
+                                <input type="text" id="contact-name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 mb-2" for="contact-email">Email Address</label>
+                                <input type="email" id="contact-email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700 mb-2" for="contact-subject">Subject</label>
+                            <input type="text" id="contact-subject" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                        </div>
+                        <div class="mb-6">
+                            <label class="block text-gray-700 mb-2" for="contact-message">Message</label>
+                            <textarea id="contact-message" rows="5" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-green-600 text-white py-3 rounded-lg font-bold hover:bg-green-500 transition">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-green-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="logo-container mb-4">
+                        <div class="logo-icon"></div>
+                        <span class="logo-text text-purple-500">Evariste Green Plants🗺</span>
+                    </div>
+                    <p class="text-green-100">Creating a sustainable future through environmental management and community action.</p>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-green-100 hover:text-white transition nav-link">Home</a></li>
+                        <li><a href="#about" class="text-green-100 hover:text-white transition nav-link">About Us</a></li>
+                        <li><a href="#projects" class="text-green-100 hover:text-white transition nav-link">Projects</a></li>
+                        <li><a href="#resources" class="text-green-100 hover:text-white transition nav-link">Resources</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Get Involved</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#donate" class="text-green-100 hover:text-white transition nav-link">Donate</a></li>
+                        <li><a href="#" class="text-green-100 hover:text-white transition nav-link">Volunteer</a></li>
+                        <li><a href="#" class="text-green-100 hover:text-white transition nav-link">Partnerships</a></li>
+                        <li><a href="#" class="text-green-100 hover:text-white transition nav-link">Careers</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Newsletter</h4>
+                    <p class="text-green-100 mb-4">Subscribe to our newsletter for updates on our projects and environmental news.</p>
+                    <div class="flex">
+                        <input type="email" id="footer-email" placeholder="Your email" class="px-4 py-2 w-full rounded-l-lg focus:outline-none text-gray-800">
+                        <button id="footer-subscribe" class="bg-yellow-500 text-green-900 px-4 py-2 rounded-r-lg font-bold hover:bg-yellow-400 transition">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-green-700 mt-8 pt-8 text-center text-green-200">
+                <p>&copy; 2025 Evariste Green Plants. All rights reserved 🗺.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Project Detail Modal -->
+    <div id="project-modal" class="project-modal">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-4xl mx-4 project-form max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 id="modal-title" class="text-2xl font-bold text-gray-800">Project Details</h2>
+                    <button id="close-modal" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                <div id="modal-content">
+                    <!-- Project details will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="success-modal" class="success-modal">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-md mx-4 success-form">
+            <div class="p-6 text-center">
+                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-check text-green-600 text-2xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Thank You!</h2>
+                <p id="success-message" class="text-gray-600 mb-6">Your submission has been received successfully.</p>
+                <button id="close-success" class="w-full bg-green-600 text-white py-3 rounded-lg font-bold hover:bg-green-500 transition">Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Newsletter Modal -->
+    <div id="newsletter-modal" class="newsletter-modal">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-md mx-4 newsletter-form">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800">Join Our Newsletter</h2>
+                    <button id="close-newsletter" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                <p class="text-gray-600 mb-6">Stay updated with our latest projects, environmental news, and ways you can help protect our planet.</p>
+                <form id="newsletter-form">
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2" for="newsletter-name">Your Name</label>
+                        <input type="text" id="newsletter-name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 mb-2" for="newsletter-email">Email Address</label>
+                        <input type="email" id="newsletter-email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                    </div>
+                    <button type="submit" class="w-full bg-green-600 text-white py-2 rounded-lg font-medium hover:bg-green-500 transition">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const themeToggle = document.getElementById('theme-toggle');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const loginBtn = document.getElementById('login-btn');
+        const signupBtn = document.getElementById('signup-btn');
+        const mobileLoginBtn = document.getElementById('mobile-login-btn');
+        const mobileSignupBtn = document.getElementById('mobile-signup-btn');
+        const loginModal = document.getElementById('login-modal');
+        const signupModal = document.getElementById('signup-modal');
+        const closeLogin = document.getElementById('close-login');
+        const closeSignup = document.getElementById('close-signup');
+        const switchToSignup = document.getElementById('switch-to-signup');
+        const switchToLogin = document.getElementById('switch-to-login');
+        const loginForm = document.getElementById('login-form');
+        const signupForm = document.getElementById('signup-form');
+        const contactForm = document.getElementById('contact-form');
+        const donateNow = document.getElementById('donate-now');
+        const projectModal = document.getElementById('project-modal');
+        const closeModal = document.getElementById('close-modal');
+        const successModal = document.getElementById('success-modal');
+        const closeSuccess = document.getElementById('close-success');
+        const newsletterModal = document.getElementById('newsletter-modal');
+        const closeNewsletter = document.getElementById('close-newsletter');
+        const newsletterForm = document.getElementById('newsletter-form');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+        const projectDetailBtns = document.querySelectorAll('.project-detail-btn');
+        const donationAmounts = document.querySelectorAll('.donation-amount');
+        const paymentMethods = document.querySelectorAll('.payment-method');
+        const resourceSearch = document.getElementById('resource-search');
+        const resourceItems = document.querySelectorAll('.resource-item');
+        const downloadBtns = document.querySelectorAll('.download-btn');
+        const watchBtns = document.querySelectorAll('.watch-btn');
+        const socialBtns = document.querySelectorAll('.social-btn');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const learnMoreBtn = document.getElementById('learn-more-btn');
+        const donateHeroBtn = document.getElementById('donate-hero-btn');
+        const newsletterHeroBtn = document.getElementById('newsletter-hero-btn');
+        const footerSubscribe = document.getElementById('footer-subscribe');
+        const customAmount = document.getElementById('custom-amount');
+        const recurringDonation = document.getElementById('recurring-donation');
+
+        // Current state
+        let currentDonationAmount = 0;
+        let currentPaymentMethod = null;
+        let isRecurringDonation = false;
+
+        // Theme Toggle
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const icon = themeToggle.querySelector('i');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Check for saved theme preference
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            const icon = themeToggle.querySelector('i');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        }
+
+        // Mobile Menu Toggle
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Auth Modal Functions
+        function openLoginModal() {
+            loginModal.style.display = 'flex';
+            signupModal.style.display = 'none';
+            projectModal.style.display = 'none';
+            successModal.style.display = 'none';
+            newsletterModal.style.display = 'none';
+        }
+
+        function openSignupModal() {
+            signupModal.style.display = 'flex';
+            loginModal.style.display = 'none';
+            projectModal.style.display = 'none';
+            successModal.style.display = 'none';
+            newsletterModal.style.display = 'none';
+        }
+
+        function openNewsletterModal() {
+            newsletterModal.style.display = 'flex';
+            loginModal.style.display = 'none';
+            signupModal.style.display = 'none';
+            projectModal.style.display = 'none';
+            successModal.style.display = 'none';
+        }
+
+        function closeAllModals() {
+            loginModal.style.display = 'none';
+            signupModal.style.display = 'none';
+            projectModal.style.display = 'none';
+            successModal.style.display = 'none';
+            newsletterModal.style.display = 'none';
+        }
+
+        // Event Listeners for Auth
+        loginBtn.addEventListener('click', openLoginModal);
+        signupBtn.addEventListener('click', openSignupModal);
+        mobileLoginBtn.addEventListener('click', openLoginModal);
+        mobileSignupBtn.addEventListener('click', openSignupModal);
+        closeLogin.addEventListener('click', closeAllModals);
+        closeSignup.addEventListener('click', closeAllModals);
+        switchToSignup.addEventListener('click', openSignupModal);
+        switchToLogin.addEventListener('click', openLoginModal);
+        newsletterHeroBtn.addEventListener('click', openNewsletterModal);
+        closeNewsletter.addEventListener('click', closeAllModals);
+
+        // Form Submissions
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            if (email && password) {
+                closeAllModals();
+                document.getElementById('success-message').textContent = 'You have successfully logged in!';
+                successModal.style.display = 'flex';
+                loginForm.reset();
+            } else {
+                alert('Please fill in all fields');
+            }
+        });
+
+        signupForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const confirm = document.getElementById('signup-confirm').value;
+            const agree = document.getElementById('agree-terms').checked;
+            
+            if (!name || !email || !password || !confirm) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            if (password !== confirm) {
+                alert('Passwords do not match');
+                return;
+            }
+            
+            if (!agree) {
+                alert('Please agree to the terms and conditions');
+                return;
+            }
+            
+            closeAllModals();
+            document.getElementById('success-message').textContent = 'Your account has been created successfully!';
+            successModal.style.display = 'flex';
+            signupForm.reset();
+        });
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('contact-name').value;
+            const email = document.getElementById('contact-email').value;
+            const subject = document.getElementById('contact-subject').value;
+            const message = document.getElementById('contact-message').value;
+            
+            if (name && email && subject && message) {
+                document.getElementById('success-message').textContent = 'Your message has been sent successfully!';
+                successModal.style.display = 'flex';
+                contactForm.reset();
+            } else {
+                alert('Please fill in all fields');
+            }
+        });
+
+        newsletterForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('newsletter-name').value;
+            const email = document.getElementById('newsletter-email').value;
+            
+            if (name && email) {
+                closeAllModals();
+                document.getElementById('success-message').textContent = 'Thank you for subscribing to our newsletter!';
+                successModal.style.display = 'flex';
+                newsletterForm.reset();
+            } else {
+                alert('Please fill in all fields');
+            }
+        });
+
+        footerSubscribe.addEventListener('click', () => {
+            const email = document.getElementById('footer-email').value;
+            if (email) {
+                document.getElementById('success-message').textContent = 'Thank you for subscribing to our newsletter!';
+                successModal.style.display = 'flex';
+                document.getElementById('footer-email').value = '';
+            } else {
+                alert('Please enter your email address');
+            }
+        });
+
+        // Donation Functionality
+        donationAmounts.forEach(amount => {
+            amount.addEventListener('click', () => {
+                donationAmounts.forEach(a => {
+                    a.classList.remove('active-donation');
+                });
+                amount.classList.add('active-donation');
+                currentDonationAmount = amount.getAttribute('data-amount');
+                customAmount.value = '';
+            });
+        });
+
+        customAmount.addEventListener('input', () => {
+            donationAmounts.forEach(a => {
+                a.classList.remove('active-donation');
+            });
+            currentDonationAmount = customAmount.value;
+        });
+
+        paymentMethods.forEach(method => {
+            method.addEventListener('click', () => {
+                paymentMethods.forEach(m => {
+                    m.classList.remove('active-payment');
+                });
+                method.classList.add('active-payment');
+                currentPaymentMethod = method.getAttribute('data-method');
+            });
+        });
+
+        recurringDonation.addEventListener('change', () => {
+            isRecurringDonation = recurringDonation.checked;
+        });
+
+        donateNow.addEventListener('click', () => {
+            if (!currentDonationAmount || currentDonationAmount <= 0) {
+                alert('Please select or enter a donation amount');
+                return;
+            }
+            
+            if (!currentPaymentMethod) {
+                alert('Please select a payment method');
+                return;
+            }
+            
+            const frequency = isRecurringDonation ? 'monthly' : 'one-time';
+            document.getElementById('success-message').textContent = `Thank you for your ${frequency} donation of $${currentDonationAmount}!`;
+            successModal.style.display = 'flex';
+            
+            // Reset donation form
+            donationAmounts.forEach(a => {
+                a.classList.remove('active-donation');
+            });
+            paymentMethods.forEach(m => {
+                m.classList.remove('active-payment');
+            });
+            customAmount.value = '';
+            recurringDonation.checked = false;
+            currentDonationAmount = 0;
+            currentPaymentMethod = null;
+            isRecurringDonation = false;
+        });
+
+        // Project Filtering
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => {
+                    b.classList.remove('active-filter');
+                });
+                btn.classList.add('active-filter');
+                
+                const filter = btn.getAttribute('data-filter');
+                
+                projectCards.forEach(card => {
+                    if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Project Detail Modal
+        projectDetailBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const projectId = btn.getAttribute('data-project');
+                let projectData = {};
+                
+                switch(projectId) {
+                    case '1':
+                        projectData = {
+                            title: 'Amazon Reforestation',
+                            image: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
+                            description: 'Our Amazon Reforestation Initiative focuses on restoring degraded areas of the world\'s largest rainforest through strategic planting of native species and community engagement programs.',
+                            goals: [
+                                'Plant 1 million native trees by 2025',
+                                'Engage 50 local communities in conservation',
+                                'Restore 5,000 hectares of degraded land',
+                                'Create sustainable livelihoods for locals'
+                            ],
+                            progress: [
+                                '350,000 trees planted to date',
+                                '25 communities actively participating',
+                                '1,200 hectares restored',
+                                '85% survival rate for planted trees'
+                            ]
+                        };
+                        break;
+                    case '2':
+                        projectData = {
+                            title: 'Youth Environmental Education',
+                            image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
+                            description: 'Our Youth Environmental Education program empowers the next generation with knowledge and skills to address environmental challenges through interactive workshops, school programs, and community projects.',
+                            goals: [
+                                'Educate 10,000 students annually',
+                                'Establish environmental clubs in 100 schools',
+                                'Train 500 teachers in environmental education',
+                                'Develop digital learning resources'
+                            ],
+                            progress: [
+                                '7,500 students educated this year',
+                                '65 school environmental clubs established',
+                                '320 teachers trained',
+                                '15 digital modules created'
+                            ]
+                        };
+                        break;
+                    case '3':
+                        projectData = {
+                            title: 'Ocean Plastic Cleanup',
+                            image: 'https://images.unsplash.com/photo-1604187351574-c75ca79f5807?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
+                            description: 'Our Ocean Plastic Cleanup initiative focuses on removing plastic waste from oceans and coastlines while promoting sustainable alternatives and advocating for policy changes to reduce plastic pollution at its source.',
+                            goals: [
+                                'Remove 100 tons of plastic from oceans annually',
+                                'Clean 50 beaches each year',
+                                'Engage 5,000 volunteers in cleanup activities',
+                                'Advocate for 5 policy changes to reduce plastic use'
+                            ],
+                            progress: [
+                                '65 tons of plastic removed this year',
+                                '32 beaches cleaned',
+                                '3,200 volunteers engaged',
+                                '2 policy changes implemented'
+                            ]
+                        };
+                        break;
+                }
+                
+                document.getElementById('modal-title').textContent = projectData.title;
+                document.getElementById('modal-content').innerHTML = `
+                    <img src="${projectData.image}" alt="${projectData.title}" class="w-full h-64 object-cover rounded-lg mb-6">
+                    <p class="text-gray-600 mb-4">${projectData.description}</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                        <div>
+                            <h4 class="font-bold text-gray-800 mb-2">Project Goals</h4>
+                            <ul class="list-disc list-inside text-gray-600 space-y-1">
+                                ${projectData.goals.map(goal => `<li>${goal}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-800 mb-2">Current Progress</h4>
+                            <ul class="list-disc list-inside text-gray-600 space-y-1">
+                                ${projectData.progress.map(progress => `<li>${progress}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <h4 class="font-bold text-green-700 mb-2">How You Can Help</h4>
+                        <p class="text-green-600">Support this project by donating, volunteering, or spreading awareness about its importance.</p>
+                    </div>
+                `;
+                projectModal.style.display = 'flex';
+            });
+        });
+
+        // Close Modals
+        closeModal.addEventListener('click', closeAllModals);
+        closeSuccess.addEventListener('click', closeAllModals);
+
+        // Resource Search
+        resourceSearch.addEventListener('input', () => {
+            const searchTerm = resourceSearch.value.toLowerCase();
+            resourceItems.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        // Download Buttons
+        downloadBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const resource = btn.getAttribute('data-resource');
+                document.getElementById('success-message').textContent = `Your download for ${resource.replace('-', ' ')} has started!`;
+                successModal.style.display = 'flex';
+            });
+        });
+
+        // Watch Buttons
+        watchBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const resource = btn.getAttribute('data-resource');
+                document.getElementById('success-message').textContent = `Opening ${resource.replace('-', ' ')} video...`;
+                successModal.style.display = 'flex';
+            });
+        });
+
+        // Social Buttons
+        socialBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.getElementById('success-message').textContent = 'Opening social media page...';
+                successModal.style.display = 'flex';
+            });
+        });
+
+        // Navigation Links
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    
+                    // Close mobile menu if open
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+
+        // Hero Section Buttons
+        learnMoreBtn.addEventListener('click', () => {
+            document.getElementById('about').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        });
+
+        donateHeroBtn.addEventListener('click', () => {
+            document.getElementById('donate').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        });
+
+        // Animated Statistics Counter
+        const counters = document.querySelectorAll('.stat-counter');
+        let animated = false;
+
+        function animateCounter() {
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                const count = +counter.innerText.replace(/,/g, '');
+                const increment = target / 100;
+
+                if (count < target) {
+                    counter.innerText = Math.ceil(count + increment).toLocaleString();
+                    setTimeout(animateCounter, 20);
+                } else {
+                    counter.innerText = target.toLocaleString();
+                }
+            });
+        }
+
+        // Initialize when page loads
+        window.addEventListener('load', () => {
+            // Start counter animation when statistics section is in view
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !animated) {
+                        animateCounter();
+                        animated = true;
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            observer.observe(document.querySelector('.bg-white'));
+        });
+
+        // Close modals when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === loginModal || e.target === signupModal || 
+                e.target === projectModal || e.target === successModal || 
+                e.target === newsletterModal) {
+                closeAllModals();
+            }
+        });
+    </script>
+</body>
+</html>
