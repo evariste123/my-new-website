@@ -249,14 +249,14 @@
     </div>
 
     <!-- Hero Section -->
-    <section id="home" class="relative bg-gradient-to-r from-green-700  via-sky-500 to-green-900 text-white py-20 md:py-32">
+    <section id="home" class="relative bg-gradient-to-r from-purple-700  via-sky-500 to-green-900 text-white py-20 md:py-32">
         <div class="container mx-auto px-4 text-center">
             <h1 class="text-4xl md:text-6xl font-bold mb-6">Protecting Our Planet Together</h1>
             <p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto">Join our mission to create a sustainable future through environmental management, education, and community action.</p>
             <div class="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-6">
-                <button id="learn-more-btn" class="bg-white text-green-700 px-8 py-3 rounded-lg font-bold hover:bg-green-100 transition">Learn More</button>
-                <button id="donate-hero-btn" class="bg-yellow-500 text-green-900 px-8 py-3 rounded-lg font-bold hover:bg-yellow-400 transition">Donate Now</button>
-                <button id="newsletter-hero-btn" class="bg-transparent border-2 border-white px-8 py-3 rounded-lg font-bold hover:bg-white hover:text-green-700 transition">Join Newsletter</button>
+                <button id="learn-more-btn" class="bg-white text-green-700 px-8 py-3 rounded-lg font-bold relative transition hover:indent-1 bg-linear-to-l from-green-500 via-purple-500 to-rose-500">Learn More</button>
+                <button id="donate-hero-btn" class="bg-yellow-500 text-green-900 px-8 py-3 rounded-lg font-bold hover:bg-yellow-400 transition hover:inset-1">Donate Now</button>
+                <button id="newsletter-hero-btn" class="bg-transparent border-2 border-white px-8 py-3 rounded-lg font-bold hover:bg-white hover:text-green-700 transition hover:indent-1">Join Newsletter</button>
             </div>
         </div>
     </section>
@@ -350,7 +350,8 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Project 1 -->
                 <div class="project-card bg-white rounded-lg shadow-md overflow-hidden" data-category="conservation">
-                    <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Reforestation Project" class="w-full h-48 object-cover">
+                    <img src="./image/dd.webp
+                    " alt="Reforestation Project" class="w-full h-48 object-cover">
                     <div class="p-6">
                         <span class="inline-block px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm mb-4">Conservation</span>
                         <h3 class="text-xl font-bold text-gray-800 mb-2">Amazon Reforestation</h3>
@@ -574,7 +575,7 @@
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- my footer -->
     <footer class="bg-green-800 text-white py-12">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -589,20 +590,20 @@
                 <div>
                     <h4 class="text-lg font-bold mb-4">Quick Links</h4>
                     <ul class="space-y-2">
-                        <li><a href="#home" class="text-green-100 hover:text-white transition nav-link">Home</a></li>
-                        <li><a href="#about" class="text-green-100 hover:text-white transition nav-link">About Us</a></li>
-                        <li><a href="#projects" class="text-green-100 hover:text-white transition nav-link">Projects</a></li>
-                        <li><a href="#resources" class="text-green-100 hover:text-white transition nav-link">Resources</a></li>
+                        <li><a href="#home" class="text-green-100 hover:text-white transition nav-link hover:underline hover:text-yellow-700">Home</a></li>
+                        <li><a href="#about" class="text-green-100 hover:text-white transition nav-link hover:underline  hover:text-yellow-700">About Us</a></li>
+                        <li><a href="#projects" class="text-green-100 hover:text-white transition nav-link hover:underline  hover:text-yellow-700">Projects</a></li>
+                        <li><a href="#resources" class="text-green-100 hover:text-white transition nav-link hover:underline hover:text-yellow-700">Resources</a></li>
                     </ul>
                 </div>
                 
                 <div>
                     <h4 class="text-lg font-bold mb-4">Get Involved</h4>
                     <ul class="space-y-2">
-                        <li><a href="#donate" class="text-green-100 hover:text-white transition nav-link">Donate</a></li>
-                        <li><a href="#" class="text-green-100 hover:text-white transition nav-link">Volunteer</a></li>
-                        <li><a href="#" class="text-green-100 hover:text-white transition nav-link">Partnerships</a></li>
-                        <li><a href="#" class="text-green-100 hover:text-white transition nav-link">Careers</a></li>
+                        <li><a href="#donate" class="text-green-100 hover:text-white transition nav-link hover:underline">Donate</a></li>
+                        <li><a href="#" class="text-green-100 hover:text-white transition nav-link hover:underline">Volunteer</a></li>
+                        <li><a href="#" class="text-green-100 hover:text-white transition nav-link hover:underline">Partnerships</a></li>
+                        <li><a href="#" class="text-green-100 hover:text-white transition nav-link hover:underline">Careers</a></li>
                     </ul>
                 </div>
                 
@@ -622,7 +623,7 @@
         </div>
     </footer>
 
-    <!-- Project Detail Modal -->
+    
     <div id="project-modal" class="project-modal">
         <div class="bg-white rounded-xl shadow-2xl w-full max-w-4xl mx-4 project-form max-h-[90vh] overflow-y-auto">
             <div class="p-6">
@@ -633,13 +634,11 @@
                     </button>
                 </div>
                 <div id="modal-content">
-                    <!-- Project details will be loaded here -->
+                    
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Success Modal -->
     <div id="success-modal" class="success-modal">
         <div class="bg-white rounded-xl shadow-2xl w-full max-w-md mx-4 success-form">
             <div class="p-6 text-center">
@@ -653,7 +652,6 @@
         </div>
     </div>
 
-    <!-- Newsletter Modal -->
     <div id="newsletter-modal" class="newsletter-modal">
         <div class="bg-white rounded-xl shadow-2xl w-full max-w-md mx-4 newsletter-form">
             <div class="p-6">
@@ -680,7 +678,6 @@
     </div>
 
     <script>
-        // DOM Elements
         const themeToggle = document.getElementById('theme-toggle');
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
@@ -723,12 +720,10 @@
         const customAmount = document.getElementById('custom-amount');
         const recurringDonation = document.getElementById('recurring-donation');
 
-        // Current state
         let currentDonationAmount = 0;
         let currentPaymentMethod = null;
         let isRecurringDonation = false;
 
-        // Theme Toggle
         themeToggle.addEventListener('click', () => {
             document.body.classList.toggle('dark-mode');
             const icon = themeToggle.querySelector('i');
@@ -743,7 +738,6 @@
             }
         });
 
-        // Check for saved theme preference
         if (localStorage.getItem('theme') === 'dark') {
             document.body.classList.add('dark-mode');
             const icon = themeToggle.querySelector('i');
@@ -751,12 +745,11 @@
             icon.classList.add('fa-sun');
         }
 
-        // Mobile Menu Toggle
         mobileMenuButton.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
         });
 
-        // Auth Modal Functions
+    
         function openLoginModal() {
             loginModal.style.display = 'flex';
             signupModal.style.display = 'none';
@@ -789,7 +782,6 @@
             newsletterModal.style.display = 'none';
         }
 
-        // Event Listeners for Auth
         loginBtn.addEventListener('click', openLoginModal);
         signupBtn.addEventListener('click', openSignupModal);
         mobileLoginBtn.addEventListener('click', openLoginModal);
@@ -801,7 +793,6 @@
         newsletterHeroBtn.addEventListener('click', openNewsletterModal);
         closeNewsletter.addEventListener('click', closeAllModals);
 
-        // Form Submissions
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const email = document.getElementById('login-email').value;
@@ -888,7 +879,6 @@
             }
         });
 
-        // Donation Functionality
         donationAmounts.forEach(amount => {
             amount.addEventListener('click', () => {
                 donationAmounts.forEach(a => {
@@ -936,7 +926,6 @@
             document.getElementById('success-message').textContent = `Thank you for your ${frequency} donation of $${currentDonationAmount}!`;
             successModal.style.display = 'flex';
             
-            // Reset donation form
             donationAmounts.forEach(a => {
                 a.classList.remove('active-donation');
             });
@@ -950,7 +939,6 @@
             isRecurringDonation = false;
         });
 
-        // Project Filtering
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 filterBtns.forEach(b => {
@@ -970,7 +958,7 @@
             });
         });
 
-        // Project Detail Modal
+    
         projectDetailBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 const projectId = btn.getAttribute('data-project');
@@ -1063,11 +1051,9 @@
             });
         });
 
-        // Close Modals
         closeModal.addEventListener('click', closeAllModals);
         closeSuccess.addEventListener('click', closeAllModals);
 
-        // Resource Search
         resourceSearch.addEventListener('input', () => {
             const searchTerm = resourceSearch.value.toLowerCase();
             resourceItems.forEach(item => {
@@ -1080,7 +1066,6 @@
             });
         });
 
-        // Download Buttons
         downloadBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 const resource = btn.getAttribute('data-resource');
@@ -1089,7 +1074,6 @@
             });
         });
 
-        // Watch Buttons
         watchBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 const resource = btn.getAttribute('data-resource');
@@ -1098,7 +1082,6 @@
             });
         });
 
-        // Social Buttons
         socialBtns.forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -1107,7 +1090,6 @@
             });
         });
 
-        // Navigation Links
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -1120,13 +1102,13 @@
                         block: 'start'
                     });
                     
-                    // Close mobile menu if open
+                
                     mobileMenu.classList.add('hidden');
                 }
             });
         });
 
-        // Hero Section Buttons
+        
         learnMoreBtn.addEventListener('click', () => {
             document.getElementById('about').scrollIntoView({
                 behavior: 'smooth',
@@ -1141,7 +1123,7 @@
             });
         });
 
-        // Animated Statistics Counter
+        
         const counters = document.querySelectorAll('.stat-counter');
         let animated = false;
 
@@ -1160,9 +1142,7 @@
             });
         }
 
-        // Initialize when page loads
         window.addEventListener('load', () => {
-            // Start counter animation when statistics section is in view
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting && !animated) {
@@ -1175,7 +1155,6 @@
             observer.observe(document.querySelector('.bg-white'));
         });
 
-        // Close modals when clicking outside
         window.addEventListener('click', (e) => {
             if (e.target === loginModal || e.target === signupModal || 
                 e.target === projectModal || e.target === successModal || 
